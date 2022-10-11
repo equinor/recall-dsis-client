@@ -1,4 +1,5 @@
 **/venv
 **/.venv
+**/secrets
 **/.idea
 **/__pycache__
