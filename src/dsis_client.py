@@ -120,19 +120,19 @@ class DSISRecallClient:
         """
         return self._get_entities_list(project, self.log[self.native])
 
-    def get_well_metadata(self, project: str, well_id: str) -> list:
+    def get_well_metadata(self, project: str, well_id: str) -> dict:
         """
         GET metadata of well with given id at input project.
         """
         return self._get_entity_metadata(project, self.well[self.native], well_id)
 
-    def get_curve_metadata(self, project: str, curve_id: str) -> list:
+    def get_curve_metadata(self, project: str, curve_id: str) -> dict:
         """
         GET metadata of curve with given id at input project.
         """
         return self._get_entity_metadata(project, self.curve[self.native], curve_id)
 
-    def get_log_metadata(self, project: str, log_id: str) -> list:
+    def get_log_metadata(self, project: str, log_id: str) -> dict:
         """
         GET metadata of log with given id at input project.
         """
