@@ -29,6 +29,7 @@ def _authenticate(method: Callable) -> Callable:
 class DSISRecallClient:
     """
     A simple DSIS client to GET data and metadata of common entities in Recall.
+    The data in Recall is split into projects, e.g. NORWAY_WELLDB, a project in norway.
     """
 
     base_url_common: str = (

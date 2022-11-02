@@ -18,7 +18,7 @@ if __name__ == "__main__":
     # Inject implementation of log repository, used to export Recall log data:
     log_repository: LogInterface = get_dsis_log_repository()
 
-    # GET dataframe with header of all logs in project  NORWAY_WELLDB
+    # GET dataframe with header of all logs in Recall project NORWAY_WELLDB
     log_headers = log_repository.get_dataframe(project="NORWAY_WELLDB")
 
     # Only include listed attributes in each header
