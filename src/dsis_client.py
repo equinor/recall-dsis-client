@@ -33,11 +33,11 @@ class DSISRecallClient:
     """
 
     base_url_common: str = (
-        "https://dsdata01.qa.dsis.equinor.com:8443/dsdataserver/dsl.svc"
+        "https://gate.dsis.equinor.com/dsdataserver/dsl.svc"
         "/RecallCommonModel/500010/RecallCommonModel_OFDB_RecallProd-RecallProd"
     )
     base_url_native: str = (
-        "https://dsdata01.qa.dsis.equinor.com:8443/dsdataserver/dsl.svc"
+        "https://gate.dsis.equinor.com/dsdataserver/dsl.svc"
         "/recall/500010/recall_RecallProd-RecallProd"
     )
     base_url: dict = {True: base_url_native, False: base_url_common}
