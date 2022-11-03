@@ -11,7 +11,7 @@ def get_token() -> Response:
         "password": config.password,
     }
     response = post(
-        url="https://dssecurity40.qa.dsis.equinor.com:9243"
+        url="https://dssecurity1242.dsis.equinor.com:9243"
         "/auth/realms/DecisionSpace_Integration_Server/protocol/openid-connect/token",
         verify=False,
         data=body,
