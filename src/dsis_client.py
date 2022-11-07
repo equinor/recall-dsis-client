@@ -69,7 +69,7 @@ class DSISRecallClient:
         response = requests.get(
             url=url, verify=False, headers={"Authorization": f"Bearer {self.token}"}
         )
-        print(f"DONE")
+        print("DONE")
         json = response.json(strict=False)
         return json
 
@@ -85,23 +85,6 @@ class DSISRecallClient:
         )
         print("DONE")
         json = response.json(strict=False)
-        return json
-
-    @_authenticate
-    def get_example(self):
-        """
-        GET metadata of entity with given id at input project.
-        """
-        url = (
-            "https://dsdata01.qa.dsis.equinor.com:8443/dsdataserver/dsl.svc/recall/500010/"
-            "recall_RecallProd-RecallProd/NORWAY_WELLDB/WELL('2/1')?$format=json&$expand=LOG"
-        )
-        print(f"GET request to {url}")
-        response = requests.get(
-            url=url, verify=False, headers={"Authorization": f"Bearer {self.token}"}
-        )
-        print(f"DONE")
-        json: dict = response.json(strict=False)
         return json
 
     def get_wells_list(self, project: str, query: str = "$format=json") -> dict:
