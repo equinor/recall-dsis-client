@@ -59,25 +59,26 @@ class DSISRecallClient:
         self.token = get_token()
 
     @_authenticate
-    def _get_entities_list(self, project: str, entity: str) -> list:
+    def _get_entities_list(self, project: str, entity: str, query: str = "$format=json") -> dict:
         """
-        GET list of all entities at input project.
+        GET list of all entities at input project, with given query string
+        which defaults to $format=json.
         """
-        url = f"{self.base_url[self.native]}/{project}/{entity}?$format=json"
+        url = f"{self.base_url[self.native]}/{project}/{entity}?{query}"
         print(f"GET request to {url}")
         response = requests.get(
             url=url, verify=False, headers={"Authorization": f"Bearer {self.token}"}
         )
-        print("DONE")
+        print(f"DONE")
         json = response.json(strict=False)
-        return json.get("value")
+        return json
 
     @_authenticate
-    def _get_entity_metadata(self, project: str, entity: str, entity_id: str) -> list:
+    def _get_entity_metadata(self, project: str, entity: str, entity_id: str, query: str = "$format=json") -> dict:
         """
         GET metadata of entity with given id at input project.
         """
-        url = f"{self.base_url[self.native]}/{project}/{entity}('{entity_id}')?$format=json"
+        url = f"{self.base_url[self.native]}/{project}/{entity}('{entity_id}')?{query}"
         print(f"GET request to {url}")
         response = requests.get(
             url=url, verify=False, headers={"Authorization": f"Bearer {self.token}"}
@@ -99,42 +100,42 @@ class DSISRecallClient:
         response = requests.get(
             url=url, verify=False, headers={"Authorization": f"Bearer {self.token}"}
         )
-        print("DONE")
-        json = response.json(strict=False)
+        print(f"DONE")
+        json: dict = response.json(strict=False)
         return json
 
-    def get_wells_list(self, project: str) -> list:
+    def get_wells_list(self, project: str, query: str = "$format=json") -> dict:
         """
         GET list of all wells at input project.
         """
-        return self._get_entities_list(project, self.well[self.native])
+        return self._get_entities_list(project, self.well[self.native], query=query)
 
-    def get_curves_list(self, project: str) -> list:
+    def get_curves_list(self, project: str, query: str = "$format=json") -> dict:
         """
         GET list of all curves at input project.
         """
-        return self._get_entities_list(project, self.curve[self.native])
+        return self._get_entities_list(project, self.curve[self.native], query=query)
 
-    def get_logs_list(self, project: str) -> list:
+    def get_logs_list(self, project: str, query: str = "$format=json") -> dict:
         """
         GET list of all logs at input project.
         """
-        return self._get_entities_list(project, self.log[self.native])
+        return self._get_entities_list(project, self.log[self.native], query=query)
 
-    def get_well_metadata(self, project: str, well_id: str) -> dict:
+    def get_well_metadata(self, project: str, well_id: str, query: str = "$format=json") -> dict:
         """
         GET metadata of well with given id at input project.
         """
-        return self._get_entity_metadata(project, self.well[self.native], well_id)
+        return self._get_entity_metadata(project, self.well[self.native], well_id, query=query)
 
-    def get_curve_metadata(self, project: str, curve_id: str) -> dict:
+    def get_curve_metadata(self, project: str, curve_id: str, query: str = "$format=json") -> dict:
         """
         GET metadata of curve with given id at input project.
         """
-        return self._get_entity_metadata(project, self.curve[self.native], curve_id)
+        return self._get_entity_metadata(project, self.curve[self.native], curve_id, query=query)
 
-    def get_log_metadata(self, project: str, log_id: str) -> dict:
+    def get_log_metadata(self, project: str, log_id: str, query: str = "$format=json") -> dict:
         """
         GET metadata of log with given id at input project.
         """
-        return self._get_entity_metadata(project, self.log[self.native], log_id)
+        return self._get_entity_metadata(project, self.log[self.native], log_id, query=query)
