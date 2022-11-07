@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 import pandas as pd
+from typing import Generator
 
 
 class LogInterface(ABC):
@@ -8,10 +9,9 @@ class LogInterface(ABC):
     """
 
     @abstractmethod
-    def get_dataframe(self, project: str) -> pd.DataFrame:
+    def get_dataframe(self, project: str) -> Generator[pd.DataFrame, None, None]:
         """
-        Get a dataframe containing header/metadata of all
-        logs at given project.
+        Generate dataframes containing header/metadata of all logs at given project.
         """
         pass
 
