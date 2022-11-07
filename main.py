@@ -41,10 +41,15 @@ if __name__ == "__main__":
                   "MFC CORRECTION",
                   "DATE STAMP"]
 
-    extract_attributes = log_headers.loc[:, attributes]
+    with open("data/norway_welldb.csv", 'w') as file:
+        file.write(",".join(attributes) + "\n")
+        for dataframe in log_headers:
+            extract_attributes = dataframe.loc[:, attributes]
 
-    # Finally, only include logs whose name contains "STAT"
-    filtered_log_headers = extract_attributes.loc[extract_attributes["NAME"].str.contains("STAT")]
+            # Finally, only include logs whose name contains "STAT"
+            filtered_log_headers = extract_attributes.loc[extract_attributes["NAME"].str.contains("STAT")]
 
-    # Print first three log entries:
-    print(filtered_log_headers.loc[0:3, :])
+            # Print first three log entries:
+            print(filtered_log_headers.loc[0:3, :])
+
+            filtered_log_headers.to_csv(file, mode='a', index=False, header=False)
