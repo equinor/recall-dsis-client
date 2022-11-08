@@ -16,7 +16,7 @@ class DSISLog(LogInterface):
         next_link: str = f"LOG?format=json&$skip={skip}"
         while next_link:
             query = f"$format=json&$skip={skip}"
-            response: dict = self.dsis_client.get_logs_list(project=project, query=query)
+            response: dict = self.dsis_client.get_all_logs(project=project, query=query)
             content: list = response.get("value")
             log_headers = (_format_log_header(log) for log in content)
             yield pd.DataFrame.from_dict(log_headers)

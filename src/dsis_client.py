@@ -59,7 +59,7 @@ class DSISRecallClient:
         self.token = get_token()
 
     @_authenticate
-    def _get_entities_list(self, project: str, entity: str, query: str = "$format=json") -> dict:
+    def _get_all_entities(self, project: str, entity: str, query: str = "$format=json") -> dict:
         """
         GET dictionary containing all entities at input project, with given query string
         which defaults to $format=json.
@@ -87,23 +87,23 @@ class DSISRecallClient:
         json = response.json(strict=False)
         return json
 
-    def get_wells_list(self, project: str, query: str = "$format=json") -> dict:
+    def get_all_wells(self, project: str, query: str = "$format=json") -> dict:
         """
         GET dictionary containing all wells at input project.
         """
-        return self._get_entities_list(project, self.well[self.native], query=query)
+        return self._get_all_entities(project, self.well[self.native], query=query)
 
-    def get_curves_list(self, project: str, query: str = "$format=json") -> dict:
+    def get_all_curves(self, project: str, query: str = "$format=json") -> dict:
         """
         GET dictionary containing all curves at input project.
         """
-        return self._get_entities_list(project, self.curve[self.native], query=query)
+        return self._get_all_entities(project, self.curve[self.native], query=query)
 
-    def get_logs_list(self, project: str, query: str = "$format=json") -> dict:
+    def get_all_logs(self, project: str, query: str = "$format=json") -> dict:
         """
         GET dictionary containing all logs at input project.
         """
-        return self._get_entities_list(project, self.log[self.native], query=query)
+        return self._get_all_entities(project, self.log[self.native], query=query)
 
     def get_well_metadata(self, project: str, well_id: str, query: str = "$format=json") -> dict:
         """
