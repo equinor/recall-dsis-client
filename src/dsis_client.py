@@ -61,7 +61,7 @@ class DSISRecallClient:
     @_authenticate
     def _get_entities_list(self, project: str, entity: str, query: str = "$format=json") -> dict:
         """
-        GET list of all entities at input project, with given query string
+        GET dictionary containing all entities at input project, with given query string
         which defaults to $format=json.
         """
         url = f"{self.base_url[self.native]}/{project}/{entity}?{query}"
@@ -89,19 +89,19 @@ class DSISRecallClient:
 
     def get_wells_list(self, project: str, query: str = "$format=json") -> dict:
         """
-        GET list of all wells at input project.
+        GET dictionary containing all wells at input project.
         """
         return self._get_entities_list(project, self.well[self.native], query=query)
 
     def get_curves_list(self, project: str, query: str = "$format=json") -> dict:
         """
-        GET list of all curves at input project.
+        GET dictionary containing all curves at input project.
         """
         return self._get_entities_list(project, self.curve[self.native], query=query)
 
     def get_logs_list(self, project: str, query: str = "$format=json") -> dict:
         """
-        GET list of all logs at input project.
+        GET dictionary containing all logs at input project.
         """
         return self._get_entities_list(project, self.log[self.native], query=query)
 

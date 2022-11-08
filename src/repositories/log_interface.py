@@ -11,7 +11,7 @@ class LogInterface(ABC):
     @abstractmethod
     def get_dataframe(self, project: str) -> Generator[pd.DataFrame, None, None]:
         """
-        Generate dataframes containing header/metadata of all logs at given project.
+        Generate dataframes containing header of all logs at given project.
         """
         pass
 
