@@ -28,7 +28,7 @@ def _authenticate(method: Callable) -> Callable:
 
 class DSISRecallClient:
     """
-    A simple DSIS client to GET data and metadata of common entities in Recall.
+    A simple DSIS client to GET data and header of common entities in Recall.
     The data in Recall is split into projects, e.g. NORWAY_WELLDB, a project in norway.
     """
 
@@ -74,9 +74,9 @@ class DSISRecallClient:
         return json
 
     @_authenticate
-    def _get_entity_metadata(self, project: str, entity: str, entity_id: str, query: str = "$format=json") -> dict:
+    def _get_entity_header(self, project: str, entity: str, entity_id: str, query: str = "$format=json") -> dict:
         """
-        GET metadata of entity with given id at input project.
+        GET header of entity with given id at input project.
         """
         url = f"{self.base_url[self.native]}/{project}/{entity}('{entity_id}')?{query}"
         print(f"GET request to {url}")
@@ -105,20 +105,20 @@ class DSISRecallClient:
         """
         return self._get_all_entities(project, self.log[self.native], query=query)
 
-    def get_well_metadata(self, project: str, well_id: str, query: str = "$format=json") -> dict:
+    def get_well_header(self, project: str, well_id: str, query: str = "$format=json") -> dict:
         """
-        GET metadata of well with given id at input project.
+        GET header of well with given id at input project.
         """
-        return self._get_entity_metadata(project, self.well[self.native], well_id, query=query)
+        return self._get_entity_header(project, self.well[self.native], well_id, query=query)
 
-    def get_curve_metadata(self, project: str, curve_id: str, query: str = "$format=json") -> dict:
+    def get_curve_header(self, project: str, curve_id: str, query: str = "$format=json") -> dict:
         """
-        GET metadata of curve with given id at input project.
+        GET header of curve with given id at input project.
         """
-        return self._get_entity_metadata(project, self.curve[self.native], curve_id, query=query)
+        return self._get_entity_header(project, self.curve[self.native], curve_id, query=query)
 
-    def get_log_metadata(self, project: str, log_id: str, query: str = "$format=json") -> dict:
+    def get_log_header(self, project: str, log_id: str, query: str = "$format=json") -> dict:
         """
-        GET metadata of log with given id at input project.
+        GET hedaer of log with given id at input project.
         """
-        return self._get_entity_metadata(project, self.log[self.native], log_id, query=query)
+        return self._get_entity_header(project, self.log[self.native], log_id, query=query)

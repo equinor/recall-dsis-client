@@ -24,7 +24,7 @@ class DSISLog(LogInterface):
             next_link = response.get("odata.nextLink")
 
     def get_header(self, project: str, log_id: str) -> dict:
-        response = self.dsis_client.get_log_metadata(project=project, log_id=log_id)
+        response = self.dsis_client.get_log_header(project=project, log_id=log_id)
         return _format_log_header(response)
 
     def get_data(self, project: str, log_id: str) -> dict:

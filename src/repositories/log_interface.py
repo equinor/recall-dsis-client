@@ -18,7 +18,7 @@ class LogInterface(ABC):
     @abstractmethod
     def get_header(self, project: str, log_id: str) -> dict:
         """
-        Get header/metadata of the log identified by given project and id.
+        Get header of the log identified by given project and id.
         """
         pass
 
