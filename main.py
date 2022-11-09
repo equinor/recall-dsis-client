@@ -1,25 +1,20 @@
 import urllib3
 
-from src.repositories.log_interface import LogInterface
-from src.repositories.get_repository import get_dsis_log_repository
+from src.use_cases.logs import write_log_headers_to_file
 
 
 if __name__ == "__main__":
     """
     DEMO:
-    Get all log headers in NORWAY_WELLDB as pandas dataframe and extract:
-    - a subset of attributes
-    - STAT logs
+    Get all log headers in NORWAY_WELLDB as pandas dataframe 
+    and write a subset of attributes to a csv file
     """
 
     # Disable SSL warning
     urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-    # Inject implementation of log repository, used to export Recall log data:
-    log_repository: LogInterface = get_dsis_log_repository()
-
-    # GET dataframe with header of all logs in Recall project NORWAY_WELLDB
-    log_headers = log_repository.get_dataframe(project="NORWAY_WELLDB")
+    # Select a project:
+    project = "NORWAY_WELLDB"
 
     # Only include listed attributes in each header
     attributes = ["SOURCE FILE NAME",
@@ -41,15 +36,4 @@ if __name__ == "__main__":
                   "MFC CORRECTION",
                   "DATE STAMP"]
 
-    with open("data/norway_welldb.csv", 'w') as file:
-        file.write(",".join(attributes) + "\n")
-        for dataframe in log_headers:
-            extract_attributes = dataframe.loc[:, attributes]
-
-            # Finally, only include logs whose name contains "STAT"
-            filtered_log_headers = extract_attributes.loc[extract_attributes["NAME"].str.contains("STAT")]
-
-            # Print first three log entries:
-            print(filtered_log_headers.loc[0:3, :])
-
-            filtered_log_headers.to_csv(file, mode='a', index=False, header=False)
+    write_log_headers_to_file(attributes=attributes, project=project, file_path="data/test.csv")
