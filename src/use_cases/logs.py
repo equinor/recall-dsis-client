@@ -20,5 +20,8 @@ def write_log_headers_to_file(attributes: List[str],
         file.write(",".join(attributes) + "\n")
         for dataframe in log_headers:
             # Extract desired attributes
+            for attribute in attributes:
+                if attribute not in dataframe.columns:
+                    dataframe[attribute] = ""
             extract_attributes = dataframe.loc[:, attributes]
             extract_attributes.to_csv(file, mode='a', index=False, header=False)
