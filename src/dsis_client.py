@@ -1,6 +1,7 @@
 from typing import Callable
 import functools
 import requests
+import json
 from requests.exceptions import HTTPError
 
 from src.authenticate import get_token
@@ -122,3 +123,17 @@ class DSISRecallClient:
         GET hedaer of log with given id at input project.
         """
         return self._get_entity_header(project, self.log[self.native], log_id, query=query)
+
+    @_authenticate
+    def get_all_project_names(self) -> list:
+        """
+        Get a list of all project names found in DSIS.
+        """
+        url = f"{self.base_url[self.native]}?$format=json"
+        response = requests.get(
+            url=url, verify=False, headers={"Authorization": f"Bearer {self.token}"}
+        )
+        json_response = json.loads(response.content)
+        project_names = [project["ProjectName"] for project in json_response["value"]]
+
+        return project_names
