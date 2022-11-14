@@ -3,14 +3,17 @@ import functools
 import requests
 import json
 from requests.exceptions import HTTPError
+from requests.exceptions import JSONDecodeError
 
 from src.authenticate import get_token
 
 
-def _authenticate(method: Callable) -> Callable:
+def _retry_strategy(method: Callable) -> Callable:
     """
-    Decorate methods in DSISClient with @_authenticate
-    to always have a valid DSIS access token.
+    Decorate methods in DSISClient with @_retry_strategy
+    to handle failed requests due to:
+    - Empty DSIS response
+    - Access token timeout
     """
 
     @functools.wraps(method)
@@ -23,6 +26,9 @@ def _authenticate(method: Callable) -> Callable:
                 self._update_token()
                 return method(*args, **kwargs)
             raise e
+        except JSONDecodeError:
+            print("Retrying due to empty response.")
+            return method(*args, **kwargs)
 
     return wrapper
 
@@ -59,7 +65,7 @@ class DSISRecallClient:
     def _update_token(self):
         self.token = get_token()
 
-    @_authenticate
+    @_retry_strategy
     def _get_all_entities(self, project: str, entity: str, query: str = "$format=json") -> dict:
         """
         GET dictionary containing all entities at input project, with given query string
@@ -74,7 +80,7 @@ class DSISRecallClient:
         json = response.json(strict=False)
         return json
 
-    @_authenticate
+    @_retry_strategy
     def _get_entity_header(self, project: str, entity: str, entity_id: str, query: str = "$format=json") -> dict:
         """
         GET header of entity with given id at input project.
