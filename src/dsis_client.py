@@ -130,7 +130,7 @@ class DSISRecallClient:
         """
         return self._get_entity_header(project, self.log[self.native], log_id, query=query)
 
-    @_authenticate
+    @_retry_strategy
     def get_all_project_names(self) -> list:
         """
         Get a list of all project names found in DSIS.
